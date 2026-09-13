@@ -1,0 +1,12 @@
+*.cjs
+*.cts
+*.js
+*.jsx
+*.mjs
+*.mts
+*.ts
+*.tsx
+coverage
+dist
+node_modules
+pnpm-lock.yaml

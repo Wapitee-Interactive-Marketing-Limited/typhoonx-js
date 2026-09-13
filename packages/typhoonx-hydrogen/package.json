@@ -1,0 +1,46 @@
+{
+  "name": "@wapitee/typhoonx-hydrogen",
+  "version": "0.0.0",
+  "description": "TyphoonX Hydrogen Analytics subscriber",
+  "bugs": {
+    "url": "https://github.com/Wapitee-Interactive-Marketing-Limited/typhoonx-js/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:Wapitee-Interactive-Marketing-Limited/typhoonx-js.git",
+    "directory": "packages/typhoonx-hydrogen"
+  },
+  "license": "MIT",
+  "author": "jay@wapitee.io",
+  "sideEffects": false,
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "LICENSE",
+    "README.md",
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json"
+  },
+  "devDependencies": {
+    "@shopify/hydrogen": "^2026.4.5",
+    "@types/react": "^18.3.31",
+    "react": "^18.3.1",
+    "typescript": "^6.0.3"
+  },
+  "peerDependencies": {
+    "@shopify/hydrogen": ">=2025.5.1",
+    "react": "^18.3.1"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
