@@ -54,22 +54,6 @@ const {nonce, header, NonceProvider} = createContentSecurityPolicy({
 | `shopId`       | `string` | yes      | Shopify shop numeric id                                                                                     |
 | `cookieDomain` | `string` | no       | Cookie `Domain` for a first-party client id. Omit for a host-only cookie (recommended on `*.myshopify.com`) |
 
-### Events
-
-Hydrogen analytics events map to TyphoonX events and are sent with `navigator.sendBeacon` to `https://spell.typhoonx.io/api/v1/receive`:
-
-| Hydrogen                | TyphoonX      |
-| ----------------------- | ------------- |
-| `page_viewed`           | `page_view`   |
-| `product_viewed`        | `view_item`   |
-| `product_added_to_cart` | `add_to_cart` |
-
-Checkout and purchase are not collected here; those belong on the Shopify checkout domain.
-
-Payloads are gated by Hydrogen `canTrack()` (Customer Privacy). If analytics processing is not allowed, nothing is sent.
-
-An anonymous client id is stored in the `__typhoon_client_id` cookie (`Max-Age` one year, `SameSite=Lax`, `Secure` on HTTPS).
-
 ## Develop
 
 ```bash

@@ -14,7 +14,7 @@ const COLLECT_ENDPOINT = 'https://spell.typhoonx.io/api/v1/receive';
 interface TyphoonXEvent {
   client_id: string;
   currency?: string;
-  event: 'add_to_cart' | 'page_view' | 'view_item';
+  event: 'add_to_cart' | 'page_view' | 'remove_from_cart' | 'view_item';
   items?: {
     item_brand: string;
     item_id: string;
@@ -48,6 +48,7 @@ export default function TyphoonX(props: TyphoonXProps) {
 function TyphoonXClient({cookieDomain, merchantId, shopId}: TyphoonXProps) {
   const {canTrack, register, subscribe} = useAnalytics();
   const {ready} = register('TyphoonX');
+
   const currentUrlRef = useRef<string | null>(null);
   const previousUrlRef = useRef<string | null>(null);
 
@@ -134,6 +135,34 @@ function TyphoonXClient({cookieDomain, merchantId, shopId}: TyphoonXProps) {
           },
         ],
         value: currentLine.cost.totalAmount.amount,
+      });
+    });
+
+    subscribe('product_removed_from_cart', (data) => {
+      const {currentLine, prevLine} = data;
+
+      const quantity
+        = (prevLine?.quantity ?? 0) - (currentLine?.quantity ?? 0);
+      if (prevLine === undefined || quantity <= 0) {
+        return;
+      }
+
+      send({
+        ...shared(window.location.href, data.shop?.currency),
+        event: 'remove_from_cart',
+        items: [
+          {
+            item_brand: prevLine.merchandise.product.vendor,
+            item_id: parseGid(prevLine.merchandise.product.id).id,
+            item_name: prevLine.merchandise.product.title,
+            price: prevLine.merchandise.price.amount,
+            quantity,
+          },
+        ],
+        value: String(
+          Number(prevLine.cost.totalAmount.amount)
+          - Number(currentLine?.cost.totalAmount.amount ?? 0),
+        ),
       });
     });
 

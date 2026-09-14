@@ -54,18 +54,6 @@ const {nonce, header, NonceProvider} = createContentSecurityPolicy({
 import type {TyphoonXProps} from '@wapitee/typhoonx-hydrogen';
 ```
 
-### Events
-
-| Hydrogen                | TyphoonX      |
-| ----------------------- | ------------- |
-| `page_viewed`           | `page_view`   |
-| `product_viewed`        | `view_item`   |
-| `product_added_to_cart` | `add_to_cart` |
-
-Beacons go to `https://spell.typhoonx.io/api/v1/receive`. Checkout and purchase are out of scope.
-
-Sends are gated by Hydrogen `canTrack()` (Customer Privacy). The anonymous visitor id lives in `__typhoon_client_id` (one year, `SameSite=Lax`, `Secure` on HTTPS).
-
 ## License
 
 [MIT](./LICENSE) © Wapitee Interactive
