@@ -1,5 +1,11 @@
 # @wapitee/typhoonx-hydrogen
 
+## 0.2.0
+
+### Minor Changes
+
+- a7d26ad: Send `remove_from_cart` when Hydrogen reports `product_removed_from_cart`.
+
 ## 0.1.0
 
 ### Minor Changes
