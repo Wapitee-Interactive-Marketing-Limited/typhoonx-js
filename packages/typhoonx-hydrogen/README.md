@@ -30,6 +30,18 @@ export function App() {
 
 The component renders `null`.
 
+Also update `app/entry.server.tsx` to allow TyphoonX in the content security policy:
+
+```javascript
+const {nonce, header, NonceProvider} = createContentSecurityPolicy({
+  shop: {
+    checkoutDomain: context.env.PUBLIC_CHECKOUT_DOMAIN,
+    storeDomain: context.env.PUBLIC_STORE_DOMAIN,
+  },
+  connectSrc: ['https://spell.typhoonx.io'], // add this line
+});
+```
+
 ### Props
 
 | Prop           | Type     | Required | Description                                                                                                 |

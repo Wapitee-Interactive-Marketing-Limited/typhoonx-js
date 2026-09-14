@@ -2,8 +2,6 @@
 
 JavaScript packages that send TyphoonX storefront events from Shopify Hydrogen.
 
-This repository is a pnpm monorepo. The publishable package lives in [`packages/typhoonx-hydrogen`](./packages/typhoonx-hydrogen).
-
 ## Packages
 
 | Package                                                      | Description                                                     |
@@ -34,6 +32,18 @@ export function App() {
     </Analytics.Provider>
   );
 }
+```
+
+Also update `app/entry.server.tsx` to allow TyphoonX in the content security policy:
+
+```javascript
+const {nonce, header, NonceProvider} = createContentSecurityPolicy({
+  shop: {
+    checkoutDomain: context.env.PUBLIC_CHECKOUT_DOMAIN,
+    storeDomain: context.env.PUBLIC_STORE_DOMAIN,
+  },
+  connectSrc: ['https://spell.typhoonx.io'], // add this line
+});
 ```
 
 ### Props
@@ -69,33 +79,6 @@ pnpm lint
 ```
 
 Requires [pnpm](https://pnpm.io) 11 and Node.js 20 or later.
-
-## Release
-
-This repo versions and publishes with [Changesets](https://github.com/changesets/changesets).
-
-1. After a user-facing change: `pnpm changeset`, then commit the file under `.changeset/`.
-2. Merging to `main` opens or updates a **Version Packages** pull request.
-3. Merging that PR publishes `@wapitee/typhoonx-hydrogen` from [`.github/workflows/release.yml`](./.github/workflows/release.yml).
-
-Publishing uses [npm Trusted Publishing](https://docs.npmjs.com/trusted-publishers) (OIDC). There is no `NPM_TOKEN` secret.
-
-On [npmjs.com](https://www.npmjs.com) for `@wapitee/typhoonx-hydrogen` (or the `wapitee` org), add a trusted publisher:
-
-| Field             | Value                                   |
-| ----------------- | --------------------------------------- |
-| Provider          | GitHub Actions                          |
-| Organization      | `Wapitee-Interactive-Marketing-Limited` |
-| Repository        | `typhoonx-js`                           |
-| Workflow filename | `release.yml`                           |
-| Allowed actions   | `npm publish`                           |
-
-In the GitHub repo, under **Settings → Actions → General**:
-
-- Workflow permissions: **Read and write**
-- Enable **Allow GitHub Actions to create and approve pull requests**
-
-The first publish of a brand-new package name may require creating the empty package on npm (or a one-time granular token publish). After that, only this workflow can publish.
 
 ## License
 
