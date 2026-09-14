@@ -2,12 +2,13 @@
   "name": "@wapitee/typhoonx-hydrogen",
   "version": "0.0.0",
   "description": "TyphoonX Hydrogen Analytics subscriber",
+  "homepage": "https://github.com/Wapitee-Interactive-Marketing-Limited/typhoonx-js/tree/main/packages/typhoonx-hydrogen",
   "bugs": {
     "url": "https://github.com/Wapitee-Interactive-Marketing-Limited/typhoonx-js/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com:Wapitee-Interactive-Marketing-Limited/typhoonx-js.git",
+    "url": "git+https://github.com/Wapitee-Interactive-Marketing-Limited/typhoonx-js.git",
     "directory": "packages/typhoonx-hydrogen"
   },
   "license": "MIT",
@@ -42,5 +43,10 @@
   },
   "engines": {
     "node": ">=20"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true,
+    "registry": "https://registry.npmjs.org"
   }
 }

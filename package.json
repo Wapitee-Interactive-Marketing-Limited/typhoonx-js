@@ -2,12 +2,16 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "changeset": "changeset",
+    "ci:publish": "pnpm --filter @wapitee/typhoonx-hydrogen build && changeset publish",
+    "ci:version": "changeset version && pnpm install --lockfile-only",
     "format:check": "prettier --check .",
     "format:fix": "prettier --write .",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix"
   },
   "devDependencies": {
+    "@changesets/cli": "^3.0.2",
     "@eslint/js": "^10.0.1",
     "@stylistic/eslint-plugin": "^5.10.0",
     "@types/node": "^24.13.4",
