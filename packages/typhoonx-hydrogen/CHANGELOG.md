@@ -1,5 +1,11 @@
 # @wapitee/typhoonx-hydrogen
 
+## 0.3.0
+
+### Minor Changes
+
+- 35366bd: Send `view_cart` when Hydrogen reports `cart_viewed`.
+
 ## 0.2.0
 
 ### Minor Changes
