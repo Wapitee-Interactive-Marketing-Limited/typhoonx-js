@@ -31,8 +31,14 @@ jobs:
       - name: Install
         run: pnpm install --frozen-lockfile
 
+      - name: Format
+        run: pnpm format:check
+
       - name: Lint
         run: pnpm lint
 
+      - name: Typecheck
+        run: pnpm typecheck
+
       - name: Build
-        run: pnpm --filter @wapitee/typhoonx-hydrogen build
+        run: pnpm build

@@ -64,7 +64,6 @@ jobs:
 
       - uses: changesets/action/version@v2
         with:
-          script: pnpm ci:version
           commit-message: 'chore: version packages'
           pr-title: 'chore: version packages'
 
@@ -92,11 +91,17 @@ jobs:
       - name: Install
         run: pnpm install --frozen-lockfile
 
+      - name: Format
+        run: pnpm format:check
+
       - name: Lint
         run: pnpm lint
 
+      - name: Typecheck
+        run: pnpm typecheck
+
       - name: Build
-        run: pnpm --filter @wapitee/typhoonx-hydrogen build
+        run: pnpm build
 
       - id: pack
         uses: changesets/action/pack@v2

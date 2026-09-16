@@ -1,14 +1,16 @@
 {
+  "name": "typhoonx-js",
   "private": true,
+  "license": "MIT",
   "type": "module",
   "scripts": {
+    "build": "pnpm -r --if-present run build",
     "changeset": "changeset",
-    "ci:publish": "pnpm --filter @wapitee/typhoonx-hydrogen build && changeset publish",
-    "ci:version": "changeset version && pnpm install --lockfile-only",
     "format:check": "prettier --check .",
     "format:fix": "prettier --write .",
     "lint": "eslint .",
-    "lint:fix": "eslint . --fix"
+    "lint:fix": "eslint . --fix",
+    "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
     "@changesets/cli": "^3.0.2",
@@ -23,6 +25,6 @@
   },
   "packageManager": "pnpm@11.17.0",
   "engines": {
-    "node": ">=20"
+    "node": "24.x"
   }
 }
