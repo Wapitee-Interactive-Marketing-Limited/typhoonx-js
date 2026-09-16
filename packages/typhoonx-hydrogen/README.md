@@ -1,20 +1,20 @@
-# @wapitee/typhoonx-hydrogen
+# TyphoonX for Shopify Hydrogen
+
+[![npm package](https://img.shields.io/npm/v/@wapitee/typhoonx-hydrogen?style=flat-square)](https://www.npmjs.com/package/@wapitee/typhoonx-hydrogen)
+[![MIT License](https://img.shields.io/badge/License-MIT-red.svg?style=flat-square)](https://opensource.org/licenses/MIT)
 
 Hydrogen `useAnalytics` subscriber that sends TyphoonX storefront events.
-
-This is not a Shopify Web Pixel. Place it in a Hydrogen storefront, inside `Analytics.Provider`.
 
 ## Install
 
 ```bash
-pnpm add @wapitee/typhoonx-hydrogen
+npm install --save @wapitee/typhoonx-hydrogen
 ```
-
-Peer dependencies: `react` ^18.3.1 and `@shopify/hydrogen` >=2025.5.1. Node.js 20 or later.
 
 ## Usage
 
 ```tsx
+// app/root.tsx
 import {Analytics} from '@shopify/hydrogen';
 import TyphoonX from '@wapitee/typhoonx-hydrogen';
 
@@ -28,9 +28,7 @@ export function App() {
 }
 ```
 
-The component renders `null`.
-
-Also update `app/entry.server.tsx` to allow TyphoonX in the content security policy:
+If your Shopify Hydrogen project sets a Content-Security-Policy, add `https://spell.typhoonx.io` to `connect-src` so event collection is not blocked.
 
 ```javascript
 const {nonce, header, NonceProvider} = createContentSecurityPolicy({
@@ -44,15 +42,11 @@ const {nonce, header, NonceProvider} = createContentSecurityPolicy({
 
 ### Props
 
-| Prop           | Type     | Required | Description                                                                                                 |
-| -------------- | -------- | -------- | ----------------------------------------------------------------------------------------------------------- |
-| `merchantId`   | `string` | yes      | TyphoonX account key (`TPX-…`)                                                                              |
-| `shopId`       | `string` | yes      | Shopify shop numeric id                                                                                     |
-| `cookieDomain` | `string` | no       | Cookie `Domain` for a first-party client id. Omit for a host-only cookie (recommended on `*.myshopify.com`) |
-
-```ts
-import type {TyphoonXProps} from '@wapitee/typhoonx-hydrogen';
-```
+| Prop           | Type     | Required | Description                                                              |
+| -------------- | -------- | -------- | ------------------------------------------------------------------------ |
+| `merchantId`   | `string` | yes      | TyphoonX merchant ID (`TPX-…`)                                           |
+| `shopId`       | `string` | yes      | Shopify store ID                                                         |
+| `cookieDomain` | `string` | no       | Cookie `Domain` for a first-party client id. Omit for a host-only cookie |
 
 ## License
 
