@@ -1,4 +1,4 @@
-import {parseGid, useAnalytics} from '@shopify/hydrogen';
+import {flattenConnection, parseGid, useAnalytics} from '@shopify/hydrogen';
 import {useEffect, useRef, useState} from 'react';
 
 import {getOrCreateClientId} from './client-id.js';
@@ -14,7 +14,7 @@ const COLLECT_ENDPOINT = 'https://spell.typhoonx.io/api/v1/receive';
 interface TyphoonXEvent {
   client_id: string;
   currency?: string;
-  event: 'add_to_cart' | 'page_view' | 'remove_from_cart' | 'view_item';
+  event: 'add_to_cart' | 'page_view' | 'remove_from_cart' | 'view_cart' | 'view_item';
   items?: {
     item_brand: string;
     item_id: string;
@@ -87,32 +87,32 @@ function TyphoonXClient({cookieDomain, merchantId, shopId}: TyphoonXProps) {
       ...(currency === undefined ? {} : {currency}),
     });
 
+    subscribe('cart_viewed', (data) => {
+      const {cart} = data;
+      if (!cart?.lines) {
+        return;
+      }
+
+      const cartLines = flattenConnection(cart.lines);
+
+      send({
+        ...shared(data.url, data.shop?.currency),
+        event: 'view_cart',
+        items: cartLines.map((line) => ({
+          item_brand: line.merchandise.product.vendor,
+          item_id: parseGid(line.merchandise.product.id).id,
+          item_name: line.merchandise.product.title,
+          price: line.merchandise.price.amount,
+          quantity: line.quantity,
+        })),
+        value: cart.cost.totalAmount.amount,
+      });
+    });
+
     subscribe('page_viewed', (data) => {
       send({
         ...shared(data.url),
         event: 'page_view',
-      });
-    });
-
-    subscribe('product_viewed', (data) => {
-      const product = data.products[0];
-      if (product === undefined) {
-        return;
-      }
-
-      send({
-        ...shared(data.url, data.shop?.currency),
-        event: 'view_item',
-        items: [
-          {
-            item_brand: product.vendor,
-            item_id: parseGid(product.id).id,
-            item_name: product.title,
-            price: product.price,
-            quantity: 1,
-          },
-        ],
-        value: product.price,
       });
     });
 
@@ -163,6 +163,28 @@ function TyphoonXClient({cookieDomain, merchantId, shopId}: TyphoonXProps) {
           Number(prevLine.cost.totalAmount.amount)
           - Number(currentLine?.cost.totalAmount.amount ?? 0),
         ),
+      });
+    });
+
+    subscribe('product_viewed', (data) => {
+      const product = data.products[0];
+      if (product === undefined) {
+        return;
+      }
+
+      send({
+        ...shared(data.url, data.shop?.currency),
+        event: 'view_item',
+        items: [
+          {
+            item_brand: product.vendor,
+            item_id: parseGid(product.id).id,
+            item_name: product.title,
+            price: product.price,
+            quantity: 1,
+          },
+        ],
+        value: product.price,
       });
     });
 
