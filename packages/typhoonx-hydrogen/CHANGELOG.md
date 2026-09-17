@@ -1,5 +1,11 @@
 # @wapitee/typhoonx-hydrogen
 
+## 0.4.0
+
+### Minor Changes
+
+- 0a9e1c0: Send `view_item_list` when Hydrogen reports `collection_viewed`.
+
 ## 0.3.0
 
 ### Minor Changes
