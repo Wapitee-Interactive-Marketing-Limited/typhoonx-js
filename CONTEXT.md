@@ -5,11 +5,11 @@ TyphoonX is the storefront event stream that Hydrogen shoppers emit to the Typho
 ## Language
 
 **TyphoonX Event**:
-A JSON payload sent to the Collect Endpoint, named in GA4 style (`page_view`, `view_item`, `add_to_cart`).
-_Avoid_: Hydrogen Analytics Event names, page_viewed, product_viewed, product_added_to_cart
+A JSON payload sent to the Collect Endpoint, named in GA4 style (`page_view`, `view_item`, `view_item_list`, `add_to_cart`).
+_Avoid_: Hydrogen Analytics Event names, page_viewed, product_viewed, collection_viewed, product_added_to_cart
 
 **Hydrogen Analytics Event**:
-A storefront analytics signal emitted by Shopify Hydrogen (`page_viewed`, `product_viewed`, `product_added_to_cart`).
+A storefront analytics signal emitted by Shopify Hydrogen (`page_viewed`, `product_viewed`, `collection_viewed`, `product_added_to_cart`).
 _Avoid_: Web Pixel, custom pixel, TyphoonX Event
 
 **Client ID**:

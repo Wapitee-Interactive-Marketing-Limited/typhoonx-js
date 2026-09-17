@@ -14,7 +14,9 @@ const COLLECT_ENDPOINT = 'https://spell.typhoonx.io/api/v1/receive';
 interface TyphoonXEvent {
   client_id: string;
   currency?: string;
-  event: 'add_to_cart' | 'page_view' | 'remove_from_cart' | 'view_cart' | 'view_item';
+  event: 'add_to_cart' | 'page_view' | 'remove_from_cart' | 'view_cart' | 'view_item' | 'view_item_list';
+  item_list_id?: string;
+  item_list_name?: string;
   items?: {
     item_brand: string;
     item_id: string;
@@ -106,6 +108,20 @@ function TyphoonXClient({cookieDomain, merchantId, shopId}: TyphoonXProps) {
           quantity: line.quantity,
         })),
         value: cart.cost.totalAmount.amount,
+      });
+    });
+
+    subscribe('collection_viewed', (data) => {
+      const {collection} = data;
+      if (!collection.id) {
+        return;
+      }
+
+      send({
+        ...shared(data.url, data.shop?.currency),
+        event: 'view_item_list',
+        item_list_id: parseGid(collection.id).id,
+        item_list_name: collection.handle,
       });
     });
 
