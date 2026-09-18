@@ -42,11 +42,11 @@ const {nonce, header, NonceProvider} = createContentSecurityPolicy({
 
 ### Props
 
-| Prop           | Type     | Required | Description                                                              |
-| -------------- | -------- | -------- | ------------------------------------------------------------------------ |
-| `merchantId`   | `string` | yes      | TyphoonX merchant ID (`TPX-…`)                                           |
-| `shopId`       | `string` | yes      | Shopify store ID                                                         |
-| `cookieDomain` | `string` | no       | Cookie `Domain` for a first-party client id. Omit for a host-only cookie |
+| Prop           | Type     | Required | Description                                                                                                       |
+| -------------- | -------- | -------- | ----------------------------------------------------------------------------------------------------------------- |
+| `merchantId`   | `string` | yes      | TyphoonX merchant ID (`TPX-…`)                                                                                    |
+| `shopId`       | `string` | yes      | Shopify store ID                                                                                                  |
+| `cookieDomain` | `string` | no       | Cookie `Domain` for a first-party client id. Defaults to the current hostname's apex domain (e.g. `.example.com`) |
 
 ## License
 
