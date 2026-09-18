@@ -51,12 +51,21 @@ function TyphoonXClient({cookieDomain, merchantId, shopId}: TyphoonXProps) {
   const {canTrack, register, subscribe} = useAnalytics();
   const {ready} = register('TyphoonX');
 
+  const canTrackRef = useRef(canTrack);
+  const configRef = useRef({cookieDomain, merchantId, shopId});
+
+  canTrackRef.current = canTrack;
+  configRef.current = {cookieDomain, merchantId, shopId};
+
   const currentUrlRef = useRef<string | null>(null);
   const previousUrlRef = useRef<string | null>(null);
+  const startedRef = useRef(false);
 
   useEffect(() => {
-    let cancelled = false;
-    const clientId = getOrCreateClientId(cookieDomain);
+    if (startedRef.current) return;
+    startedRef.current = true;
+
+    const clientId = getOrCreateClientId(configRef.current.cookieDomain);
 
     const referrerFor = (url: string): string => {
       if (currentUrlRef.current !== url) {
@@ -68,7 +77,7 @@ function TyphoonXClient({cookieDomain, merchantId, shopId}: TyphoonXProps) {
     };
 
     const send = (payload: TyphoonXEvent): void => {
-      if (cancelled || !canTrack()) {
+      if (!canTrackRef.current()) {
         return;
       }
 
@@ -205,11 +214,7 @@ function TyphoonXClient({cookieDomain, merchantId, shopId}: TyphoonXProps) {
     });
 
     ready();
-
-    return () => {
-      cancelled = true;
-    };
-  }, [canTrack, cookieDomain, merchantId, ready, shopId, subscribe]);
+  }, [subscribe]);
 
   return null;
 }

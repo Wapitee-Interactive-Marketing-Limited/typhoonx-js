@@ -1,5 +1,11 @@
 # @wapitee/typhoonx-hydrogen
 
+## 0.4.3
+
+### Patch Changes
+
+- Subscribe to Hydrogen analytics events only once so handlers stay attached when `canTrack` or config changes.
+
 ## 0.4.2
 
 ### Patch Changes
