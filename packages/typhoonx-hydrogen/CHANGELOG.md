@@ -1,5 +1,11 @@
 # @wapitee/typhoonx-hydrogen
 
+## 0.4.4
+
+### Patch Changes
+
+- Re-run Hydrogen analytics subscriptions when `canTrack` or `ready` changes, so consent updates still reach `sendBeacon`.
+
 ## 0.4.3
 
 ### Patch Changes
