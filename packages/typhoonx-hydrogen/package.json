@@ -1,7 +1,15 @@
 {
   "name": "@wapitee/typhoonx-hydrogen",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "description": "TyphoonX Hydrogen Analytics subscriber",
+  "keywords": [
+    "typhoonx",
+    "shopify",
+    "hydrogen",
+    "analytics",
+    "react",
+    "storefront"
+  ],
   "homepage": "https://github.com/Wapitee-Interactive-Marketing-Limited/typhoonx-js/tree/main/packages/typhoonx-hydrogen",
   "bugs": {
     "url": "https://github.com/Wapitee-Interactive-Marketing-Limited/typhoonx-js/issues"
@@ -30,6 +38,9 @@
   ],
   "scripts": {
     "build": "tsc -p tsconfig.json"
+  },
+  "dependencies": {
+    "universal-cookie": "^8.1.2"
   },
   "devDependencies": {
     "@shopify/hydrogen": "^2026.4.5",

@@ -1,5 +1,11 @@
 # @wapitee/typhoonx-hydrogen
 
+## 0.4.2
+
+### Patch Changes
+
+- Manage the client id cookie with `universal-cookie`. Leave an existing `__typhoon_client_id` cookie unchanged on repeat visits.
+
 ## 0.4.1
 
 ### Patch Changes
