@@ -1,5 +1,11 @@
 # @wapitee/typhoonx-hydrogen
 
+## 0.4.1
+
+### Patch Changes
+
+- 05fa4c5: Default the client id cookie to the storefront apex domain (e.g. `.example.com`) so the id is shared across subdomains.
+
 ## 0.4.0
 
 ### Minor Changes
