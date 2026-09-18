@@ -1,5 +1,11 @@
 # @wapitee/typhoonx-hydrogen
 
+## 0.4.5
+
+### Patch Changes
+
+- Ignore analytics callbacks from a previous effect after `canTrack` or config changes, so stale handlers cannot send.
+
 ## 0.4.4
 
 ### Patch Changes

@@ -55,6 +55,7 @@ function TyphoonXClient({cookieDomain, merchantId, shopId}: TyphoonXProps) {
   const previousUrlRef = useRef<string | null>(null);
 
   useEffect(() => {
+    let cancelled = false;
     const clientId = getOrCreateClientId(cookieDomain);
 
     const referrerFor = (url: string): string => {
@@ -67,7 +68,9 @@ function TyphoonXClient({cookieDomain, merchantId, shopId}: TyphoonXProps) {
     };
 
     const send = (payload: TyphoonXEvent): void => {
-      if (!canTrack()) return;
+      if (cancelled || !canTrack()) {
+        return;
+      }
 
       navigator.sendBeacon(
         COLLECT_ENDPOINT,
@@ -202,7 +205,11 @@ function TyphoonXClient({cookieDomain, merchantId, shopId}: TyphoonXProps) {
     });
 
     ready();
-  }, [canTrack, ready, subscribe]);
+
+    return () => {
+      cancelled = true;
+    };
+  }, [canTrack, cookieDomain, merchantId, ready, shopId, subscribe]);
 
   return null;
 }
