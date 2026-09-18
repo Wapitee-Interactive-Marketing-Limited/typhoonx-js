@@ -55,7 +55,6 @@ function TyphoonXClient({cookieDomain, merchantId, shopId}: TyphoonXProps) {
   const previousUrlRef = useRef<string | null>(null);
 
   useEffect(() => {
-    let cancelled = false;
     const clientId = getOrCreateClientId(cookieDomain);
 
     const referrerFor = (url: string): string => {
@@ -63,14 +62,11 @@ function TyphoonXClient({cookieDomain, merchantId, shopId}: TyphoonXProps) {
         previousUrlRef.current = currentUrlRef.current;
         currentUrlRef.current = url;
       }
-
       return previousUrlRef.current ?? document.referrer;
     };
 
-    const send = (payload: TyphoonXEvent): void => {
-      if (cancelled || !canTrack()) {
-        return;
-      }
+    const send = (payload: TyphoonXEvent) => {
+      if (!canTrack()) return;
 
       navigator.sendBeacon(
         COLLECT_ENDPOINT,
@@ -94,9 +90,7 @@ function TyphoonXClient({cookieDomain, merchantId, shopId}: TyphoonXProps) {
       if (!cart?.lines) {
         return;
       }
-
       const cartLines = flattenConnection(cart.lines);
-
       send({
         ...shared(data.url, data.shop?.currency),
         event: 'view_cart',
@@ -116,7 +110,6 @@ function TyphoonXClient({cookieDomain, merchantId, shopId}: TyphoonXProps) {
       if (!collection.id) {
         return;
       }
-
       send({
         ...shared(data.url, data.shop?.currency),
         event: 'view_item_list',
@@ -137,7 +130,6 @@ function TyphoonXClient({cookieDomain, merchantId, shopId}: TyphoonXProps) {
       if (currentLine === undefined) {
         return;
       }
-
       send({
         ...shared(window.location.href, data.shop?.currency),
         event: 'add_to_cart',
@@ -156,13 +148,10 @@ function TyphoonXClient({cookieDomain, merchantId, shopId}: TyphoonXProps) {
 
     subscribe('product_removed_from_cart', (data) => {
       const {currentLine, prevLine} = data;
-
-      const quantity
-        = (prevLine?.quantity ?? 0) - (currentLine?.quantity ?? 0);
+      const quantity = (prevLine?.quantity ?? 0) - (currentLine?.quantity ?? 0);
       if (prevLine === undefined || quantity <= 0) {
         return;
       }
-
       send({
         ...shared(window.location.href, data.shop?.currency),
         event: 'remove_from_cart',
@@ -187,7 +176,6 @@ function TyphoonXClient({cookieDomain, merchantId, shopId}: TyphoonXProps) {
       if (product === undefined) {
         return;
       }
-
       send({
         ...shared(data.url, data.shop?.currency),
         event: 'view_item',
@@ -205,11 +193,7 @@ function TyphoonXClient({cookieDomain, merchantId, shopId}: TyphoonXProps) {
     });
 
     ready();
-
-    return () => {
-      cancelled = true;
-    };
-  }, [canTrack, cookieDomain, merchantId, ready, shopId, subscribe]);
+  }, [cookieDomain, merchantId, shopId, canTrack, ready, subscribe]);
 
   return null;
 }

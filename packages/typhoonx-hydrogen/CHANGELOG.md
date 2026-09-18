@@ -1,5 +1,11 @@
 # @wapitee/typhoonx-hydrogen
 
+## 0.4.6
+
+### Patch Changes
+
+- Do not cancel previous analytics handlers when the subscription effect re-runs, so Hydrogen events delivered during cleanup still reach `sendBeacon`.
+
 ## 0.4.5
 
 ### Patch Changes
