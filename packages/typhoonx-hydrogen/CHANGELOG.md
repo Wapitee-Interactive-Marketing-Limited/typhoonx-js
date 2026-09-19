@@ -1,5 +1,11 @@
 # @wapitee/typhoonx-hydrogen
 
+## 0.5.0
+
+### Minor Changes
+
+- Send `search` when Hydrogen reports `search_viewed`.
+
 ## 0.4.6
 
 ### Patch Changes

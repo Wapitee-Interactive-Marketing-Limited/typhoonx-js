@@ -14,7 +14,7 @@ const COLLECT_ENDPOINT = 'https://spell.typhoonx.io/api/v1/receive';
 interface TyphoonXEvent {
   client_id: string;
   currency?: string;
-  event: 'add_to_cart' | 'page_view' | 'remove_from_cart' | 'view_cart' | 'view_item' | 'view_item_list';
+  event: 'add_to_cart' | 'page_view' | 'remove_from_cart' | 'search' | 'view_cart' | 'view_item' | 'view_item_list';
   item_list_id?: string;
   item_list_name?: string;
   items?: {
@@ -27,6 +27,7 @@ interface TyphoonXEvent {
   merchant_id: string;
   referrer: string;
   request_page_url: string;
+  search_term?: string;
   shop_id: string;
   timestamp: string;
   user_agent: string;
@@ -87,10 +88,10 @@ function TyphoonXClient({cookieDomain, merchantId, shopId}: TyphoonXProps) {
 
     subscribe('cart_viewed', (data) => {
       const {cart} = data;
-      if (!cart?.lines) {
-        return;
-      }
+      if (!cart?.lines) return;
+
       const cartLines = flattenConnection(cart.lines);
+
       send({
         ...shared(data.url, data.shop?.currency),
         event: 'view_cart',
@@ -107,9 +108,8 @@ function TyphoonXClient({cookieDomain, merchantId, shopId}: TyphoonXProps) {
 
     subscribe('collection_viewed', (data) => {
       const {collection} = data;
-      if (!collection.id) {
-        return;
-      }
+      if (!collection.id) return;
+
       send({
         ...shared(data.url, data.shop?.currency),
         event: 'view_item_list',
@@ -127,9 +127,8 @@ function TyphoonXClient({cookieDomain, merchantId, shopId}: TyphoonXProps) {
 
     subscribe('product_added_to_cart', (data) => {
       const {currentLine} = data;
-      if (currentLine === undefined) {
-        return;
-      }
+      if (currentLine === undefined) return;
+
       send({
         ...shared(window.location.href, data.shop?.currency),
         event: 'add_to_cart',
@@ -149,9 +148,8 @@ function TyphoonXClient({cookieDomain, merchantId, shopId}: TyphoonXProps) {
     subscribe('product_removed_from_cart', (data) => {
       const {currentLine, prevLine} = data;
       const quantity = (prevLine?.quantity ?? 0) - (currentLine?.quantity ?? 0);
-      if (prevLine === undefined || quantity <= 0) {
-        return;
-      }
+      if (prevLine === undefined || quantity <= 0) return;
+
       send({
         ...shared(window.location.href, data.shop?.currency),
         event: 'remove_from_cart',
@@ -173,9 +171,8 @@ function TyphoonXClient({cookieDomain, merchantId, shopId}: TyphoonXProps) {
 
     subscribe('product_viewed', (data) => {
       const product = data.products[0];
-      if (product === undefined) {
-        return;
-      }
+      if (product === undefined) return;
+
       send({
         ...shared(data.url, data.shop?.currency),
         event: 'view_item',
@@ -189,6 +186,17 @@ function TyphoonXClient({cookieDomain, merchantId, shopId}: TyphoonXProps) {
           },
         ],
         value: product.price,
+      });
+    });
+
+    subscribe('search_viewed', (data) => {
+      const {searchTerm} = data;
+      if (!searchTerm) return;
+
+      send({
+        ...shared(data.url, data.shop?.currency),
+        event: 'search',
+        search_term: searchTerm,
       });
     });
 
