@@ -22,6 +22,11 @@ const cookies = new Cookies(null, {
   maxAge: MAX_AGE,
 });
 
+/** Whether `__typhoon_client_id` is already set. */
+export function hasClientId(): boolean {
+  return cookies.get(COOKIE, {doNotParse: true}) !== undefined;
+}
+
 /** Existing `__typhoon_client_id`, or a new UUID cookie on the apex domain. */
 export function getOrCreateClientId(cookieDomain?: string): string {
   const existing = cookies.get(COOKIE, {doNotParse: true});

@@ -1,7 +1,7 @@
 import {flattenConnection, parseGid, useAnalytics} from '@shopify/hydrogen';
 import {useEffect, useRef, useState} from 'react';
 
-import {getOrCreateClientId} from './client-id.js';
+import {getOrCreateClientId, hasClientId} from './client-id.js';
 
 export interface TyphoonXProps {
   merchantId: string;
@@ -14,7 +14,15 @@ const COLLECT_ENDPOINT = 'https://spell.typhoonx.io/api/v1/receive';
 interface TyphoonXEvent {
   client_id: string;
   currency?: string;
-  event: 'add_to_cart' | 'page_view' | 'remove_from_cart' | 'search' | 'view_cart' | 'view_item' | 'view_item_list';
+  event:
+    | 'add_to_cart'
+    | 'first_visit'
+    | 'page_view'
+    | 'remove_from_cart'
+    | 'search'
+    | 'view_cart'
+    | 'view_item'
+    | 'view_item_list';
   item_list_id?: string;
   item_list_name?: string;
   items?: {
@@ -54,6 +62,17 @@ function TyphoonXClient({cookieDomain, merchantId, shopId}: TyphoonXProps) {
 
   const currentUrlRef = useRef<string | null>(null);
   const previousUrlRef = useRef<string | null>(null);
+
+  useEffect(() => {
+    try {
+      if (!hasClientId()) {
+        window.localStorage.setItem('__typhoon_first_visit_time', new Date().toISOString());
+        window.localStorage.setItem('__typhoon_first_visit_url', window.location.href);
+      }
+    } catch {
+      // Do nothing
+    }
+  }, [hasClientId()]);
 
   useEffect(() => {
     const clientId = getOrCreateClientId(cookieDomain);
@@ -119,10 +138,30 @@ function TyphoonXClient({cookieDomain, merchantId, shopId}: TyphoonXProps) {
     });
 
     subscribe('page_viewed', (data) => {
+      const payload = shared(data.url);
+
       send({
-        ...shared(data.url),
+        ...payload,
         event: 'page_view',
       });
+
+      try {
+        const visitTime = window.localStorage.getItem('__typhoon_first_visit_time');
+        const visitUrl = window.localStorage.getItem('__typhoon_first_visit_url');
+        if (!visitTime || !visitUrl) return;
+
+        send({
+          ...payload,
+          request_page_url: visitUrl,
+          timestamp: visitTime,
+          event: 'first_visit',
+        });
+
+        window.localStorage.removeItem('__typhoon_first_visit_time');
+        window.localStorage.removeItem('__typhoon_first_visit_url');
+      } catch {
+        // Do nothing
+      }
     });
 
     subscribe('product_added_to_cart', (data) => {
