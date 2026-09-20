@@ -43,13 +43,22 @@ interface TyphoonXEvent {
 }
 
 export default function TyphoonX(props: TyphoonXProps) {
+  const {subscribe} = useAnalytics();
+  const isInsideProvider = subscribe.length > 0;
+
   const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
     setIsClient(true);
   }, []);
 
-  if (!isClient) {
+  useEffect(() => {
+    if (!isInsideProvider) {
+      console.error('[TyphoonX] <TyphoonX> must be rendered inside <Analytics.Provider>.');
+    }
+  }, [isInsideProvider]);
+
+  if (!isClient || !isInsideProvider) {
     return null;
   }
 
