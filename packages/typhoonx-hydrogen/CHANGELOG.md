@@ -1,5 +1,15 @@
 # @wapitee/typhoonx-hydrogen
 
+## 0.6.0
+
+### Minor Changes
+
+- Send `first_visit` on a new visitor's first page view.
+
+### Patch Changes
+
+- Log an error when `<TyphoonX>` is not rendered inside `<Analytics.Provider>`.
+
 ## 0.5.0
 
 ### Minor Changes
