@@ -1,30 +1,18 @@
 import js from '@eslint/js';
-import stylistic from '@stylistic/eslint-plugin';
 import {defineConfig, globalIgnores} from 'eslint/config';
+import prettier from 'eslint-config-prettier/flat';
 import simpleImportSort from 'eslint-plugin-simple-import-sort';
 import tseslint from 'typescript-eslint';
-
-const stylisticConfig = stylistic.configs.customize({
-  arrowParens: true,
-  blockSpacing: true,
-  braceStyle: '1tbs',
-  commaDangle: 'always-multiline',
-  indent: 2,
-  jsx: true,
-  quotes: 'single',
-  semi: true,
-});
 
 export default defineConfig(
   globalIgnores(['coverage/**', '**/dist/**']),
   {
     files: [tseslint.globs.jsts],
-    extends: [js.configs.recommended, stylisticConfig],
+    extends: [js.configs.recommended],
     plugins: {
       'simple-import-sort': simpleImportSort,
     },
     rules: {
-      '@stylistic/object-curly-spacing': ['error', 'never'],
       'no-restricted-syntax': [
         'error',
         {
@@ -50,4 +38,6 @@ export default defineConfig(
       },
     },
   },
+  // Formatting is Prettier's job. Keep last so it wins over the configs above.
+  prettier,
 );

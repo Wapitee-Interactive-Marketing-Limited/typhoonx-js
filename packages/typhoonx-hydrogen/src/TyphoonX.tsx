@@ -54,7 +54,9 @@ export default function TyphoonX(props: TyphoonXProps) {
 
   useEffect(() => {
     if (!isInsideProvider) {
-      console.error('[TyphoonX] <TyphoonX> must be rendered inside <Analytics.Provider>.');
+      console.error(
+        '[TyphoonX] <TyphoonX> must be rendered inside <Analytics.Provider>.',
+      );
     }
   }, [isInsideProvider]);
 
@@ -75,8 +77,14 @@ function TyphoonXClient({cookieDomain, merchantId, shopId}: TyphoonXProps) {
   useEffect(() => {
     try {
       if (!hasClientId()) {
-        window.localStorage.setItem('__typhoon_first_visit_time', new Date().toISOString());
-        window.localStorage.setItem('__typhoon_first_visit_url', window.location.href);
+        window.localStorage.setItem(
+          '__typhoon_first_visit_time',
+          new Date().toISOString(),
+        );
+        window.localStorage.setItem(
+          '__typhoon_first_visit_url',
+          window.location.href,
+        );
       }
     } catch {
       // Do nothing
@@ -155,8 +163,12 @@ function TyphoonXClient({cookieDomain, merchantId, shopId}: TyphoonXProps) {
       });
 
       try {
-        const visitTime = window.localStorage.getItem('__typhoon_first_visit_time');
-        const visitUrl = window.localStorage.getItem('__typhoon_first_visit_url');
+        const visitTime = window.localStorage.getItem(
+          '__typhoon_first_visit_time',
+        );
+        const visitUrl = window.localStorage.getItem(
+          '__typhoon_first_visit_url',
+        );
         if (!visitTime || !visitUrl) return;
 
         send({
@@ -211,8 +223,8 @@ function TyphoonXClient({cookieDomain, merchantId, shopId}: TyphoonXProps) {
           },
         ],
         value: String(
-          Number(prevLine.cost.totalAmount.amount)
-          - Number(currentLine?.cost.totalAmount.amount ?? 0),
+          Number(prevLine.cost.totalAmount.amount) -
+            Number(currentLine?.cost.totalAmount.amount ?? 0),
         ),
       });
     });
