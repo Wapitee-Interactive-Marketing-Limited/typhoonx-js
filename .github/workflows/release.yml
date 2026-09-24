@@ -22,22 +22,14 @@ jobs:
     permissions:
       contents: read
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
 
-      - uses: pnpm/action-setup@v4
-
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 24
-          cache: pnpm
-
-      - name: Install
-        run: pnpm install --frozen-lockfile
+      - uses: ./.github/actions/setup
 
       - id: select-mode
-        uses: changesets/action/select-mode@v2
+        uses: changesets/action/select-mode@ae32849d5ba541f9ae29e40e22a623bc13562f51 # v2.1.2
 
   version:
     if: needs.select-mode.outputs.mode == 'version'
@@ -48,21 +40,13 @@ jobs:
       contents: write
       pull-requests: write
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
 
-      - uses: pnpm/action-setup@v4
+      - uses: ./.github/actions/setup
 
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 24
-          cache: pnpm
-
-      - name: Install
-        run: pnpm install --frozen-lockfile
-
-      - uses: changesets/action/version@v2
+      - uses: changesets/action/version@ae32849d5ba541f9ae29e40e22a623bc13562f51 # v2.1.2
         with:
           commit-message: 'chore: version packages'
           pr-title: 'chore: version packages'
@@ -77,19 +61,11 @@ jobs:
     permissions:
       contents: read
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
 
-      - uses: pnpm/action-setup@v4
-
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 24
-          cache: pnpm
-
-      - name: Install
-        run: pnpm install --frozen-lockfile
+      - uses: ./.github/actions/setup
 
       - name: Format
         run: pnpm format:check
@@ -104,7 +80,7 @@ jobs:
         run: pnpm build
 
       - id: pack
-        uses: changesets/action/pack@v2
+        uses: changesets/action/pack@ae32849d5ba541f9ae29e40e22a623bc13562f51 # v2.1.2
         with:
           publish-plan-artifact-id: ${{ needs.select-mode.outputs.publish-plan-artifact-id }}
 
@@ -116,22 +92,15 @@ jobs:
       contents: write
       id-token: write
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
 
-      - uses: pnpm/action-setup@v4
-
-      - uses: actions/setup-node@v4
+      - uses: ./.github/actions/setup
         with:
-          node-version: 24
-          cache: pnpm
           registry-url: https://registry.npmjs.org
 
-      - name: Install
-        run: pnpm install --frozen-lockfile
-
-      - uses: changesets/action/publish@v2
+      - uses: changesets/action/publish@ae32849d5ba541f9ae29e40e22a623bc13562f51 # v2.1.2
         with:
           pack-dir-artifact-id: ${{ needs.pack.outputs.pack-dir-artifact-id }}
         env:
