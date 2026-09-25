@@ -61,6 +61,22 @@ importers:
         specifier: ^6.0.3
         version: 6.0.3
 
+  packages/typhoonx-react:
+    dependencies:
+      universal-cookie:
+        specifier: ^8.1.2
+        version: 8.1.2
+    devDependencies:
+      '@types/react':
+        specifier: ^18.3.31
+        version: 18.3.31
+      react:
+        specifier: ^18.3.1
+        version: 18.3.1
+      typescript:
+        specifier: ^6.0.3
+        version: 6.0.3
+
 packages:
 
   '@babel/code-frame@7.29.7':
