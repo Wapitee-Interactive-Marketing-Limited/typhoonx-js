@@ -1,5 +1,11 @@
 # @wapitee/typhoonx-hydrogen
 
+## 0.7.0
+
+### Minor Changes
+
+- 3377232: Send Meta Pixel `_fbp` and `_fbc` cookies as `fbp` and `fbc` on every event, falling back to the page URL's `fbclid` for `fbc`.
+
 ## 0.6.0
 
 ### Minor Changes
