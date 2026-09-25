@@ -16,6 +16,10 @@ _Avoid_: Web Pixel, custom pixel, TyphoonX Event
 An anonymous visitor identifier stored in the first-party `__typhoon_client_id` cookie.
 _Avoid_: session id, user id, customer id
 
+**Meta Pixel IDs**:
+The Meta Pixel browser ID (`_fbp` cookie, sent as `fbp`) and click ID (`_fbc` cookie, sent as `fbc`) attached to every TyphoonX Event when present. `fbc` falls back to the page URL's `fbclid` before the Pixel has written `_fbc`.
+_Avoid_: Facebook cookies, Meta user id
+
 **Merchant ID**:
 The TyphoonX account key that owns a collect stream, such as `TPX-...`.
 _Avoid_: Shop ID, storefront id

@@ -2,6 +2,7 @@ import {flattenConnection, parseGid, useAnalytics} from '@shopify/hydrogen';
 import {useEffect, useRef, useState} from 'react';
 
 import {getOrCreateClientId, hasClientId} from './client-id.js';
+import {getMetaPixelIds} from './meta-pixel.js';
 
 export interface TyphoonXProps {
   merchantId: string;
@@ -23,6 +24,8 @@ interface TyphoonXEvent {
     | 'view_cart'
     | 'view_item'
     | 'view_item_list';
+  fbc?: string;
+  fbp?: string;
   item_list_id?: string;
   item_list_name?: string;
   items?: {
@@ -120,6 +123,7 @@ function TyphoonXClient({cookieDomain, merchantId, shopId}: TyphoonXProps) {
       timestamp: new Date().toISOString(),
       user_agent: window.navigator.userAgent,
       ...(currency === undefined ? {} : {currency}),
+      ...getMetaPixelIds(url),
     });
 
     subscribe('cart_viewed', (data) => {

@@ -48,6 +48,10 @@ const {nonce, header, NonceProvider} = createContentSecurityPolicy({
 | `shopId`       | `string` | yes      | Shopify store ID                                                                                                  |
 | `cookieDomain` | `string` | no       | Cookie `Domain` for a first-party client id. Defaults to the current hostname's apex domain (e.g. `.example.com`) |
 
+### Meta Pixel
+
+If the storefront runs Meta Pixel, every event also carries its `_fbp` cookie as `fbp` and its `_fbc` cookie as `fbc`. When `_fbc` is not set yet but the page URL has `fbclid`, `fbc` is built as `fb.1.<timestamp>.<fbclid>`. Missing values are omitted.
+
 ## License
 
 [MIT](./LICENSE) © Wapitee Interactive
