@@ -4,5 +4,5 @@ This is a monorepo containing multiple packages to integrate with TyphoonX using
 
 ## Packages
 
-- [`@wapitee/typhoonx-hydrogen`](./packages/typhoonx-hydrogen/README.md)
-- [`@wapitee/typhoonx-react`](./packages/typhoonx-react/README.md)
+- [`@wapitee/typhoonx-hydrogen`](./packages/hydrogen/README.md)
+- [`@wapitee/typhoonx-react`](./packages/react/README.md)

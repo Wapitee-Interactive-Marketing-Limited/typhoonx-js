@@ -10,14 +10,14 @@
     "react",
     "storefront"
   ],
-  "homepage": "https://github.com/Wapitee-Interactive-Marketing-Limited/typhoonx-js/tree/main/packages/typhoonx-hydrogen",
+  "homepage": "https://github.com/Wapitee-Interactive-Marketing-Limited/typhoonx-js/tree/main/packages/hydrogen",
   "bugs": {
     "url": "https://github.com/Wapitee-Interactive-Marketing-Limited/typhoonx-js/issues"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Wapitee-Interactive-Marketing-Limited/typhoonx-js.git",
-    "directory": "packages/typhoonx-hydrogen"
+    "directory": "packages/hydrogen"
   },
   "license": "MIT",
   "author": "jay@wapitee.io",

@@ -8,14 +8,14 @@
     "react",
     "storefront"
   ],
-  "homepage": "https://github.com/Wapitee-Interactive-Marketing-Limited/typhoonx-js/tree/main/packages/typhoonx-react",
+  "homepage": "https://github.com/Wapitee-Interactive-Marketing-Limited/typhoonx-js/tree/main/packages/react",
   "bugs": {
     "url": "https://github.com/Wapitee-Interactive-Marketing-Limited/typhoonx-js/issues"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Wapitee-Interactive-Marketing-Limited/typhoonx-js.git",
-    "directory": "packages/typhoonx-react"
+    "directory": "packages/react"
   },
   "license": "MIT",
   "author": "jay@wapitee.io",

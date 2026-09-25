@@ -42,7 +42,7 @@ importers:
         specifier: ^8.70.0
         version: 8.70.0(eslint@10.10.0)(typescript@6.0.3)
 
-  packages/typhoonx-hydrogen:
+  packages/hydrogen:
     dependencies:
       universal-cookie:
         specifier: ^8.1.2
@@ -61,7 +61,7 @@ importers:
         specifier: ^6.0.3
         version: 6.0.3
 
-  packages/typhoonx-react:
+  packages/react:
     dependencies:
       universal-cookie:
         specifier: ^8.1.2
