@@ -5,11 +5,14 @@
   "sideEffects": false,
   "type": "module",
   "scripts": {
+    "prebuild": "pnpm --filter @wapitee/typhoonx-hydrogen build",
     "build": "shopify hydrogen build --codegen",
     "codegen": "shopify hydrogen codegen && react-router typegen",
+    "predev": "pnpm --filter @wapitee/typhoonx-hydrogen build",
     "dev": "shopify hydrogen dev --codegen",
     "lint": "eslint --no-error-on-unmatched-pattern .",
     "preview": "shopify hydrogen preview --build",
+    "pretypecheck": "pnpm --filter @wapitee/typhoonx-hydrogen build",
     "typecheck": "react-router typegen && tsc --noEmit"
   },
   "browserslist": [
