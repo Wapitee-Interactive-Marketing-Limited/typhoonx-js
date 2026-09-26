@@ -17,6 +17,7 @@ export function TyphoonXProvider({
   children,
   consent,
   cookieDomain,
+  measurementId,
   merchantId,
   shopId,
 }: TyphoonXProviderProps) {
@@ -34,10 +35,11 @@ export function TyphoonXProvider({
         merchantId,
         shopId,
         ...(cookieDomain === undefined ? {} : {cookieDomain}),
+        ...(measurementId === undefined ? {} : {measurementId}),
       },
       history.current,
     );
-  }, [consent, cookieDomain, merchantId, shopId]);
+  }, [consent, cookieDomain, measurementId, merchantId, shopId]);
 
   return (
     <TyphoonXContext.Provider value={tracker}>

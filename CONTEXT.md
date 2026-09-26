@@ -20,6 +20,10 @@ _Avoid_: session id, user id, customer id
 The Meta Pixel browser ID (`_fbp` cookie, sent as `fbp`) and click ID (`_fbc` cookie, sent as `fbc`) attached to every TyphoonX Event when present. `fbc` falls back to the page URL's `fbclid` before the Pixel has written `_fbc`.
 _Avoid_: Facebook cookies, Meta user id
 
+**Google IDs**:
+The GA4 client ID (`_ga` cookie, sent as `ga_client_id`), GA4 session ID (`_ga_<ID>` cookie for the configured measurement ID, sent as `ga_session_id`), and Google Ads click IDs (`gclid` from `_gcl_aw` or the page URL; `gbraid` and `wbraid` from the page URL) attached to every TyphoonX Event when present.
+_Avoid_: Client ID (that is TyphoonX's own `__typhoon_client_id`), Google cookies
+
 **Merchant ID**:
 The TyphoonX account key that owns a collect stream, such as `TPX-...`.
 _Avoid_: Shop ID, storefront id

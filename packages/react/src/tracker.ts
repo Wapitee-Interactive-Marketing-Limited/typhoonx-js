@@ -1,5 +1,8 @@
 import {getOrCreateClientId} from './client-id.js';
 import {takeFirstVisit} from './first-visit.js';
+import type {GoogleIds} from './google-ids.js';
+import {getGoogleIds} from './google-ids.js';
+import type {MetaPixelIds} from './meta-pixel.js';
 import {getMetaPixelIds} from './meta-pixel.js';
 
 const COLLECT_ENDPOINT = 'https://spell.typhoonx.io/api/v1/receive';
@@ -8,6 +11,8 @@ export interface TyphoonXConfig {
   /** Whether the visitor allows data collection. Nothing is sent or stored while `false`. */
   consent: boolean;
   cookieDomain?: string;
+  /** GA4 measurement ID (`G-…`) whose `_ga_<ID>` cookie supplies `ga_session_id`. */
+  measurementId?: string;
   merchantId: string;
   shopId: string;
 }
@@ -52,7 +57,7 @@ export interface PageHistory {
   url: string | null;
 }
 
-interface TyphoonXEvent {
+interface TyphoonXEvent extends GoogleIds, MetaPixelIds {
   client_id: string;
   currency?: string;
   event:
@@ -64,8 +69,6 @@ interface TyphoonXEvent {
     | 'view_cart'
     | 'view_item'
     | 'view_item_list';
-  fbc?: string;
-  fbp?: string;
   item_list_id?: string;
   item_list_name?: string;
   items?: {
@@ -98,7 +101,7 @@ const NOOP_TRACKER: TyphoonXTracker = {
 };
 
 export function createTracker(
-  {consent, cookieDomain, merchantId, shopId}: TyphoonXConfig,
+  {consent, cookieDomain, measurementId, merchantId, shopId}: TyphoonXConfig,
   history: PageHistory,
 ): TyphoonXTracker {
   if (!consent) {
@@ -132,6 +135,7 @@ export function createTracker(
       user_agent: window.navigator.userAgent,
       ...(currency === undefined ? {} : {currency}),
       ...getMetaPixelIds(url),
+      ...getGoogleIds(url, measurementId),
     };
   };
 

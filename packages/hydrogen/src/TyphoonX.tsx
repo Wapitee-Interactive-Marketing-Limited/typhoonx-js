@@ -2,17 +2,22 @@ import {flattenConnection, parseGid, useAnalytics} from '@shopify/hydrogen';
 import {useEffect, useRef, useState} from 'react';
 
 import {getOrCreateClientId, hasClientId} from './client-id.js';
+import type {GoogleIds} from './google-ids.js';
+import {getGoogleIds} from './google-ids.js';
+import type {MetaPixelIds} from './meta-pixel.js';
 import {getMetaPixelIds} from './meta-pixel.js';
 
 export interface TyphoonXProps {
   merchantId: string;
   shopId: string;
   cookieDomain?: string;
+  /** GA4 measurement ID (`G-…`) whose `_ga_<ID>` cookie supplies `ga_session_id`. */
+  measurementId?: string;
 }
 
 const COLLECT_ENDPOINT = 'https://spell.typhoonx.io/api/v1/receive';
 
-interface TyphoonXEvent {
+interface TyphoonXEvent extends GoogleIds, MetaPixelIds {
   client_id: string;
   currency?: string;
   event:
@@ -24,8 +29,6 @@ interface TyphoonXEvent {
     | 'view_cart'
     | 'view_item'
     | 'view_item_list';
-  fbc?: string;
-  fbp?: string;
   item_list_id?: string;
   item_list_name?: string;
   items?: {
@@ -70,7 +73,12 @@ export default function TyphoonX(props: TyphoonXProps) {
   return <TyphoonXClient {...props} />;
 }
 
-function TyphoonXClient({cookieDomain, merchantId, shopId}: TyphoonXProps) {
+function TyphoonXClient({
+  cookieDomain,
+  measurementId,
+  merchantId,
+  shopId,
+}: TyphoonXProps) {
   const {canTrack, register, subscribe} = useAnalytics();
   const {ready} = register('TyphoonX');
 
@@ -124,6 +132,7 @@ function TyphoonXClient({cookieDomain, merchantId, shopId}: TyphoonXProps) {
       user_agent: window.navigator.userAgent,
       ...(currency === undefined ? {} : {currency}),
       ...getMetaPixelIds(url),
+      ...getGoogleIds(url, measurementId),
     });
 
     subscribe('cart_viewed', (data) => {
@@ -265,7 +274,15 @@ function TyphoonXClient({cookieDomain, merchantId, shopId}: TyphoonXProps) {
     });
 
     ready();
-  }, [cookieDomain, merchantId, shopId, canTrack, ready, subscribe]);
+  }, [
+    cookieDomain,
+    measurementId,
+    merchantId,
+    shopId,
+    canTrack,
+    ready,
+    subscribe,
+  ]);
 
   return null;
 }

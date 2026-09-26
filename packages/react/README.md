@@ -65,12 +65,13 @@ If your site sets a Content-Security-Policy, add `https://spell.typhoonx.io` to 
 
 ### Props
 
-| Prop           | Type      | Required | Description                                                                                                                       |
-| -------------- | --------- | -------- | --------------------------------------------------------------------------------------------------------------------------------- |
-| `merchantId`   | `string`  | yes      | TyphoonX merchant ID (`TPX-…`)                                                                                                    |
-| `shopId`       | `string`  | yes      | Shop ID                                                                                                                           |
-| `consent`      | `boolean` | yes      | Whether the visitor allows data collection. While `false`, events are dropped and nothing is written to cookies or `localStorage` |
-| `cookieDomain` | `string`  | no       | Cookie `Domain` for a first-party client id. Defaults to the current hostname's apex domain (e.g. `.example.com`)                 |
+| Prop            | Type      | Required | Description                                                                                                                       |
+| --------------- | --------- | -------- | --------------------------------------------------------------------------------------------------------------------------------- |
+| `merchantId`    | `string`  | yes      | TyphoonX merchant ID (`TPX-…`)                                                                                                    |
+| `shopId`        | `string`  | yes      | Shop ID                                                                                                                           |
+| `consent`       | `boolean` | yes      | Whether the visitor allows data collection. While `false`, events are dropped and nothing is written to cookies or `localStorage` |
+| `cookieDomain`  | `string`  | no       | Cookie `Domain` for a first-party client id. Defaults to the current hostname's apex domain (e.g. `.example.com`)                 |
+| `measurementId` | `string`  | no       | GA4 measurement ID (`G-…`). Enables `ga_session_id`                                                                               |
 
 ### Events
 
