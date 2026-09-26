@@ -1,4 +1,7 @@
 {
-  "*.{js,jsx,cjs,mjs,ts,tsx,cts,mts}": ["eslint --fix", "prettier --write"],
+  "*.{js,jsx,cjs,mjs,ts,tsx,cts,mts}": [
+    "eslint --fix --no-warn-ignored --config eslint.config.mjs",
+    "prettier --write"
+  ],
   "!(*.js|*.jsx|*.cjs|*.mjs|*.ts|*.tsx|*.cts|*.mts)": "prettier --ignore-unknown --write"
 }
