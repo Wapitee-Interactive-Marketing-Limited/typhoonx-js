@@ -1,5 +1,11 @@
 # @wapitee/typhoonx-hydrogen
 
+## 0.8.1
+
+### Patch Changes
+
+- a0dbc65: Build with tsdown into a single bundled `dist/index.js` and `dist/index.d.ts`.
+
 ## 0.8.0
 
 ### Minor Changes
