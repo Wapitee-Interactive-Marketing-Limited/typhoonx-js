@@ -1,9 +1,9 @@
-import {getOrCreateClientId} from './client-id.js';
+import {getOrCreateClientId} from '../../../shared/client-id.js';
+import type {GoogleIds} from '../../../shared/google-ids.js';
+import {getGoogleIds} from '../../../shared/google-ids.js';
+import type {MetaPixelIds} from '../../../shared/meta-pixel.js';
+import {getMetaPixelIds} from '../../../shared/meta-pixel.js';
 import {takeFirstVisit} from './first-visit.js';
-import type {GoogleIds} from './google-ids.js';
-import {getGoogleIds} from './google-ids.js';
-import type {MetaPixelIds} from './meta-pixel.js';
-import {getMetaPixelIds} from './meta-pixel.js';
 
 const COLLECT_ENDPOINT = 'https://spell.typhoonx.io/api/v1/receive';
 

@@ -1,4 +1,4 @@
-import {hasClientId} from './client-id.js';
+import {hasClientId} from '../../../shared/client-id.js';
 
 const TIME_KEY = '__typhoon_first_visit_time';
 const URL_KEY = '__typhoon_first_visit_url';

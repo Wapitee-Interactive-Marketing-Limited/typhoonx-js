@@ -37,7 +37,7 @@
     "dist"
   ],
   "scripts": {
-    "build": "tsc -p tsconfig.json"
+    "build": "tsdown"
   },
   "dependencies": {
     "universal-cookie": "^8.1.2"
@@ -46,6 +46,7 @@
     "@shopify/hydrogen": "^2026.4.5",
     "@types/react": "^18.3.31",
     "react": "^18.3.1",
+    "tsdown": "^0.23.0",
     "typescript": "^6.0.3"
   },
   "peerDependencies": {

@@ -1,11 +1,11 @@
 import {flattenConnection, parseGid, useAnalytics} from '@shopify/hydrogen';
 import {useEffect, useRef, useState} from 'react';
 
-import {getOrCreateClientId, hasClientId} from './client-id.js';
-import type {GoogleIds} from './google-ids.js';
-import {getGoogleIds} from './google-ids.js';
-import type {MetaPixelIds} from './meta-pixel.js';
-import {getMetaPixelIds} from './meta-pixel.js';
+import {getOrCreateClientId, hasClientId} from '../../../shared/client-id.js';
+import type {GoogleIds} from '../../../shared/google-ids.js';
+import {getGoogleIds} from '../../../shared/google-ids.js';
+import type {MetaPixelIds} from '../../../shared/meta-pixel.js';
+import {getMetaPixelIds} from '../../../shared/meta-pixel.js';
 
 export interface TyphoonXProps {
   merchantId: string;
