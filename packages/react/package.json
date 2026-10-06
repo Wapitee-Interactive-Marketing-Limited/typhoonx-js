@@ -49,6 +49,13 @@
   "peerDependencies": {
     "react": "^18 || ^19"
   },
+  "devEngines": {
+    "packageManager": {
+      "name": "pnpm",
+      "version": "11.17.0",
+      "onFail": "download"
+    }
+  },
   "publishConfig": {
     "access": "public",
     "provenance": true,
