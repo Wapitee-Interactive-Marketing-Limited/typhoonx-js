@@ -6,6 +6,7 @@ import type {GoogleIds} from '../../../shared/google-ids.js';
 import {getGoogleIds} from '../../../shared/google-ids.js';
 import type {MetaPixelIds} from '../../../shared/meta-pixel.js';
 import {getMetaPixelIds} from '../../../shared/meta-pixel.js';
+import {sendEvent} from '../../../shared/send-event.js';
 
 export interface TyphoonXProps {
   merchantId: string;
@@ -116,10 +117,7 @@ function TyphoonXClient({
     const send = (payload: TyphoonXEvent) => {
       if (!canTrack()) return;
 
-      navigator.sendBeacon(
-        COLLECT_ENDPOINT,
-        new Blob([JSON.stringify(payload)], {type: 'application/json'}),
-      );
+      sendEvent(COLLECT_ENDPOINT, payload);
     };
 
     const shared = (url: string, currency?: string) => ({

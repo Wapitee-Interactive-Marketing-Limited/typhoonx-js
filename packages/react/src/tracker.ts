@@ -3,6 +3,7 @@ import type {GoogleIds} from '../../../shared/google-ids.js';
 import {getGoogleIds} from '../../../shared/google-ids.js';
 import type {MetaPixelIds} from '../../../shared/meta-pixel.js';
 import {getMetaPixelIds} from '../../../shared/meta-pixel.js';
+import {sendEvent} from '../../../shared/send-event.js';
 import {takeFirstVisit} from './first-visit.js';
 
 const COLLECT_ENDPOINT = 'https://spell.typhoonx.io/api/v1/receive';
@@ -117,10 +118,7 @@ export function createTracker(
   };
 
   const send = (payload: TyphoonXEvent) => {
-    navigator.sendBeacon(
-      COLLECT_ENDPOINT,
-      new Blob([JSON.stringify(payload)], {type: 'application/json'}),
-    );
+    sendEvent(COLLECT_ENDPOINT, payload);
   };
 
   const shared = (currency?: string) => {
