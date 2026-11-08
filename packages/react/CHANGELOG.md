@@ -1,5 +1,11 @@
 # @wapitee/typhoonx-react
 
+## 0.2.2
+
+### Patch Changes
+
+- 51e95e2: Fall back to a keepalive `fetch` when `navigator.sendBeacon` refuses an event, so oversized payloads are no longer dropped silently.
+
 ## 0.2.1
 
 ### Patch Changes
